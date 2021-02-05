@@ -424,6 +424,7 @@ def trends():
 
     activetrends.append({'Trend': 'Grade10 Total Students', 'Count': str(num_stud)})
     activetrends.append({'Trend': 'Grade10 Chatbot Students', 'Count': str(num_chatbot_stud)})
+    #print("Check")
     mycursor.close()
     return jsonpify(json.dumps(activetrends))
 
