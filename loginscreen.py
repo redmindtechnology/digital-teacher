@@ -50,13 +50,15 @@ def login():
         mycursor.execute(sql, val)
         myresult = mycursor.fetchall()
         role = ""
+        school = ""
         for x in myresult:
             #print(x)
             role = x[11]
             password = x[3]
+            school = x[8]
             #print(role)
         mycursor.close()
-        if role == "admin" and password == pwd:
+        if role == "admin" and password == pwd and school == app.skl:
             print("Correct Password")
             return jsonpify("OK")
         else:
@@ -270,6 +272,66 @@ def grade10a():
     except:
      print("Error")
 
+
+@app.route('/sub_wise', methods=['GET', 'POST'])
+def sub_wise():
+    try:
+        # db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD,
+        #connection_timeout = 60000)
+        # mycursor = db_connection.cursor()
+        # sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 9"
+        # val = (app.skl,)
+        # print(app.skl)
+        activetrends = []
+        activetrends.append({"sector": "English_Lesson", "size": 6.6})
+        activetrends.append({"sector": "English_Poem", "size": 0.6})
+        activetrends.append({"sector": "Civics", "size": 23.2})
+        activetrends.append({"sector": "History", "size": 2.2})
+        activetrends.append({"sector": "Geography", "size": 4.5})
+        activetrends.append({"sector": "Science", "size": 14.6})
+
+        activetrends.append({"sector": "English_Lesson", "size": 7.0})
+        activetrends.append({"sector": "English_Poem", "size": 0.6})
+        activetrends.append({"sector": "Civics", "size": 23.2})
+        activetrends.append({"sector": "History", "size": 2.2})
+        activetrends.append({"sector": "Geography", "size": 4.5})
+        activetrends.append({"sector": "Science", "size": 14.6})
+
+        activetrends.append({"sector": "English_Lesson", "size": 8.0})
+        activetrends.append({"sector": "English_Poem", "size": 0.6})
+        activetrends.append({"sector": "Civics", "size": 23.2})
+        activetrends.append({"sector": "History", "size": 2.2})
+        activetrends.append({"sector": "Geography", "size": 4.5})
+        activetrends.append({"sector": "Science", "size": 14.6})
+
+        activetrends.append({"sector": "English_Lesson", "size": 9.0})
+        activetrends.append({"sector": "English_Poem", "size": 0.6})
+        activetrends.append({"sector": "Civics", "size": 23.2})
+        activetrends.append({"sector": "History", "size": 2.2})
+        activetrends.append({"sector": "Geography", "size": 4.5})
+        activetrends.append({"sector": "Science", "size": 14.6})
+
+        activetrends.append({"sector": "English_Lesson", "size": 10.0})
+        activetrends.append({"sector": "English_Poem", "size": 0.6})
+        activetrends.append({"sector": "Civics", "size": 23.2})
+        activetrends.append({"sector": "History", "size": 2.2})
+        activetrends.append({"sector": "Geography", "size": 4.5})
+        activetrends.append({"sector": "Science", "size": 14.6})
+
+        # mycursor.execute(sql, val)
+        # myresult = mycursor.fetchall()
+        # num_stud = len(myresult)
+        # print(num_stud)
+        # num_chatbot_stud = 0
+        # activetrends = []
+
+        # mycursor.close()
+        return jsonpify(json.dumps(activetrends))
+
+    except:
+        print("Error")
+
+
 @app.route('/grade8', methods=['GET', 'POST'])
 def grade8():
     try:
@@ -424,7 +486,6 @@ def trends():
 
     activetrends.append({'Trend': 'Grade10 Total Students', 'Count': str(num_stud)})
     activetrends.append({'Trend': 'Grade10 Chatbot Students', 'Count': str(num_chatbot_stud)})
-    #print("Check")
     mycursor.close()
     return jsonpify(json.dumps(activetrends))
 
