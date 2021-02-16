@@ -264,68 +264,67 @@ def grade10a():
             if x[4] > 0:
                 num_chatbot_stud = num_chatbot_stud + 1
 
+        print(num_chatbot_stud)
+
         activetrends.append({'Trend': 'Grade10 Total Students', 'Count': str(num_stud)})
         activetrends.append({'Trend': 'Grade10 Chatbot Students', 'Count': str(num_chatbot_stud)})
         mycursor.close()
         return jsonpify(json.dumps(activetrends))
 
     except:
-     print("Error")
+        print("Error")
 
 
 @app.route('/sub_wise', methods=['GET', 'POST'])
 def sub_wise():
     try:
-        # db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD,
-        #connection_timeout = 60000)
-        # mycursor = db_connection.cursor()
-        # sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 9"
-        # val = (app.skl,)
-        # print(app.skl)
+        db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD,
+                                      connection_timeout=60000)
+        # Get the students in Grade 6
+        mycursor = db_connection.cursor()
+
+        grade = [6, 7, 8, 9, 10]
+        subject = ["English", "Civics", "History", "Geography", "Science"]
         activetrends = []
-        activetrends.append({"sector": "English_Lesson", "size": 6.6})
-        activetrends.append({"sector": "English_Poem", "size": 0.6})
-        activetrends.append({"sector": "Civics", "size": 23.2})
-        activetrends.append({"sector": "History", "size": 2.2})
-        activetrends.append({"sector": "Geography", "size": 4.5})
-        activetrends.append({"sector": "Science", "size": 14.6})
 
-        activetrends.append({"sector": "English_Lesson", "size": 7.0})
-        activetrends.append({"sector": "English_Poem", "size": 0.6})
-        activetrends.append({"sector": "Civics", "size": 23.2})
-        activetrends.append({"sector": "History", "size": 2.2})
-        activetrends.append({"sector": "Geography", "size": 4.5})
-        activetrends.append({"sector": "Science", "size": 14.6})
+        for mygrade in grade:
+            stud_count = [0, 0, 0, 0, 0]
 
-        activetrends.append({"sector": "English_Lesson", "size": 8.0})
-        activetrends.append({"sector": "English_Poem", "size": 0.6})
-        activetrends.append({"sector": "Civics", "size": 23.2})
-        activetrends.append({"sector": "History", "size": 2.2})
-        activetrends.append({"sector": "Geography", "size": 4.5})
-        activetrends.append({"sector": "Science", "size": 14.6})
+            sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = %s"
+            val = (app.skl, mygrade)
+            #val = ("Holy Cross", mygrade)
+            mycursor.execute(sql, val)
+            myresult_1 = mycursor.fetchall()
 
-        activetrends.append({"sector": "English_Lesson", "size": 9.0})
-        activetrends.append({"sector": "English_Poem", "size": 0.6})
-        activetrends.append({"sector": "Civics", "size": 23.2})
-        activetrends.append({"sector": "History", "size": 2.2})
-        activetrends.append({"sector": "Geography", "size": 4.5})
-        activetrends.append({"sector": "Science", "size": 14.6})
+            user_id = []
+            for x in myresult_1:
+                user_id.append(x[0])
+            print(user_id)
 
-        activetrends.append({"sector": "English_Lesson", "size": 10.0})
-        activetrends.append({"sector": "English_Poem", "size": 0.6})
-        activetrends.append({"sector": "Civics", "size": 23.2})
-        activetrends.append({"sector": "History", "size": 2.2})
-        activetrends.append({"sector": "Geography", "size": 4.5})
-        activetrends.append({"sector": "Science", "size": 14.6})
+            for user in user_id:
+                print(user)
+                # Subject loop
+                sub = 0
+                for my_sub in subject:
+                    sql_2 = "SELECT * from x8ur_chatbot_lesson_activity_tracker WHERE userid = %s AND subject = %s"
+                    val_2 = (user, my_sub)
+                    mycursor.execute(sql_2, val_2)
+                    myresult_2 = mycursor.fetchall()
+                    if len(myresult_2) > 0:
+                        stud_count[sub] = stud_count[sub] + 1
+                    sub = sub + 1
 
-        # mycursor.execute(sql, val)
-        # myresult = mycursor.fetchall()
-        # num_stud = len(myresult)
-        # print(num_stud)
-        # num_chatbot_stud = 0
-        # activetrends = []
+            activetrends.append({"sector": "English_Lesson", "size": stud_count[0]})
+            activetrends.append({"sector": "English_Poem", "size": stud_count[0]})
+            activetrends.append({"sector": "Civics", "size": stud_count[1]})
+            activetrends.append({"sector": "History", "size": stud_count[2]})
+            activetrends.append({"sector": "Geography", "size": stud_count[3]})
+            activetrends.append({"sector": "Science", "size": stud_count[4]})
 
-        # mycursor.close()
+        mycursor.close()
+        print(activetrends)
+
+        #return activetrends
         return jsonpify(json.dumps(activetrends))
 
     except:
@@ -514,4 +513,5 @@ def trends():
 #    return jsonpify("ok")
 
 if __name__ == '__main__':
+    #check = sub_wise()
     app.run()
