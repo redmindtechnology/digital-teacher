@@ -579,7 +579,43 @@ def trends():
     mycursor.close()
     return jsonpify(json.dumps(activetrends))
 
+@app.route('/get_top6_quiz', methods=['GET', 'POST'])
+def get_top6_quiz():
+    try:
+        db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD,
+                                      connection_timeout=60000)
+        mycursor = db_connection.cursor()
+        sql = "SELECT * from x8ur_chatbot_quiz_activity_tracker"
+        mycursor.execute(sql)
+        myresult = mycursor.fetchall()
 
+        quiz_scores = {}
+        for x in myresult:
+            if x[1] in quiz_scores:
+                quiz_scores[x[1]] = quiz_scores[x[1]] + x[4]
+            else:
+                quiz_scores[x[1]] = x[4]
+
+        print(quiz_scores)
+        sorted_quiz_scores = dict(sorted(quiz_scores.items(), key=lambda item: item[1], reverse=True))
+        print(sorted_quiz_scores)
+
+        activetrends = []
+
+        for user_id in sorted_quiz_scores:
+            print(user_id)
+            sql = "SELECT firstname from x8ur_chatbot_user where id=%s"
+            val = (user_id,)
+            mycursor.execute(sql, val)
+            myresult = mycursor.fetchone()
+            activetrends.append({'country': str(myresult[0]), 'visits': str(sorted_quiz_scores[user_id])})
+            print(str(myresult))
+
+        mycursor.close()
+        return jsonpify(json.dumps(activetrends))
+
+    except:
+        print("Error")
 # Logout
 # @app.route('/logout')
 # def logout():
@@ -636,3 +672,4 @@ def topstudents():
 if __name__ == '__main__':
     # check = sub_wise()
     app.run()
+    #get_top6_quiz()
