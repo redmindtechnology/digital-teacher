@@ -616,30 +616,6 @@ def get_top6_quiz():
 
     except:
         print("Error")
-# Logout
-# @app.route('/logout')
-# def logout():
-#	if 'username' in session:
-#		session.pop('username', None)
-#	return jsonpify({'message' : 'You successfully logged out'})
-
-# @app.route('/getActiveRobots', methods=['GET', 'POST'])
-# def getActiveRobots():
-#    try:
-#       db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD,connection_timeout=60000)
-#       #print("Connected to:", db_connection.get_server_info())
-#      mycursor = db_connection.cursor()
-#      tr="""select user from x8ur_chatbot_user where role='admin' """;
-#     mycursor.execute(tr)
-#    count=mycursor.fetchall()
-#   #print (username)
-#   results=jsonpify(count)
-# print(results)
-#  return results
-
-# except mysql.Error as err:
-#    return jsonpify("ok")
-
 
 @app.route('/topstudents', methods=['GET', 'POST'])
 def topstudents():
