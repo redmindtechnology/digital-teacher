@@ -144,6 +144,7 @@ def grade6():
         #num_stud = len(myresult)
         num_stud = 0
         timeline = get_timeline()
+        print(timeline)
         for x in myresult:
             if x[13] > timeline:
                 num_stud = num_stud + 1
