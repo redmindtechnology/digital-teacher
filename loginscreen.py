@@ -141,14 +141,14 @@ def grade6():
         
         mycursor.execute(sql, val)
         myresult = mycursor.fetchall()
-        #num_stud = len(myresult)
+        print("lenght:", len(myresult))
         num_stud = 0
         timeline = get_timeline()
-        print("Grade 6 ",timeline)
+        print("Grade 6 :",timeline)
         for x in myresult:
-            print('value',x[13])
+            print("value :",x[13])
             if x[13] > timeline:
-                print('inside if')
+                print("inside if")
                 num_stud = num_stud + 1
                 
         print (num_stud)
