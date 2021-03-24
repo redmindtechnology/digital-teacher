@@ -144,11 +144,11 @@ def grade6():
         #num_stud = len(myresult)
         num_stud = 0
         timeline = get_timeline()
-        print(timeline)
+        print("Grade 6 ",timeline)
         for x in myresult:
             if x[13] > timeline:
                 num_stud = num_stud + 1
-
+        print (num_stud)
         mycursor.close()
         return jsonpify(num_stud)
 
