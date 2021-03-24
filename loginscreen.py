@@ -41,9 +41,9 @@ def login():
         username = re.sub("'", "", username)
         pwd = (request.args.get('password'))
         skl = (request.args.get('skl'))
-        #print(username)
-        #print(pwd)
-        #print(skl)
+        print(username)
+        print(pwd)
+        print(skl)
         app.skl = skl
         # sql = "SELECT  pwd FROM user WHERE email="+username
         sql = "SELECT * FROM x8ur_chatbot_user WHERE username = %s"
@@ -54,38 +54,38 @@ def login():
         role = ""
         school = ""
         for x in myresult:
-            # #print(x)
+            # print(x)
             role = x[11]
             password = x[3]
             school = x[8]
-            # #print(role)
+            # print(role)
         mycursor.close()
         if role == "admin" and password == pwd and school == app.skl:
-            #print("Correct Password")
+            print("Correct Password")
             return jsonpify("OK")
         else:
-            #print("Incorrect Password")
+            print("Incorrect Password")
             return jsonpify("Error")
 
     except:
-        #print("Error")
-        # #print("Error Code:", err.errno)
-        # #print("SQLSTATE", err.sqlstate)
-        # #print("Message", err.msg)
+        print("Error")
+        # print("Error Code:", err.errno)
+        # print("SQLSTATE", err.sqlstate)
+        # print("Message", err.msg)
         # return jsonpify(err)
 
 @app.route('/get_interval', methods=['GET', 'POST'])
 def get_interval():
     try:
         app.interval = request.args.get('interval')
-        #print(app.interval)
+        print(app.interval)
         return jsonpify("OK")
     except:
-        #print("Error in get_interval")
+        print("Error in get_interval")
 
 def get_timeline():
     current = datetime.datetime.now()
-    #print(current)
+    print(current)
     if app.interval == "Weekly":
         timeline = current - datetime.timedelta(days=7)
     if app.interval == "Monthly":
@@ -106,7 +106,7 @@ def overallgrade():
         mycursor = db_connection.cursor()
         sql = "SELECT * from x8ur_chatbot_user WHERE school = %s"
         val = (app.skl,)
-        #print(app.skl)
+        print(app.skl)
         mycursor.execute(sql, val)
         myresult = mycursor.fetchall()
         num_stud = len(myresult)
@@ -116,16 +116,16 @@ def overallgrade():
             if x[13] > timeline:
                 num_stud = num_stud + 1
 
-        #print(num_stud)
+        print(num_stud)
         mycursor.close()
         return jsonpify(num_stud)
 
 
     except:
-        #print("Error")
-        # #print("Error Code:", err.errno)
-        # #print("SQLSTATE", err.sqlstate)
-        # #print("Message", err.msg)
+        print("Error")
+        # print("Error Code:", err.errno)
+        # print("SQLSTATE", err.sqlstate)
+        # print("Message", err.msg)
         # return jsonpify(err)
 
 @app.route('/grade6', methods=['GET', 'POST'])
@@ -135,7 +135,7 @@ def grade6():
                                       connection_timeout=60000)
         mycursor = db_connection.cursor()
 
-        print('in 6th grade')
+        
         sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 6"
         val = (app.skl,)
         
@@ -150,14 +150,13 @@ def grade6():
                 num_stud = num_stud + 1
 
         mycursor.close()
-        print(num_stud)
         return jsonpify(num_stud)
 
     except:
-        #print("Error")
-        # #print("Error Code:", err.errno)
-        # #print("SQLSTATE", err.sqlstate)
-        # #print("Message", err.msg)
+        print("Error")
+        # print("Error Code:", err.errno)
+        # print("SQLSTATE", err.sqlstate)
+        # print("Message", err.msg)
         # return jsonpify(err)
 
 @app.route('/grade7', methods=['GET', 'POST'])
@@ -168,7 +167,7 @@ def grade7():
         mycursor = db_connection.cursor()
         sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 7"
         val = (app.skl,)
-        #print(app.skl)
+        print(app.skl)
         mycursor.execute(sql, val)
         myresult = mycursor.fetchall()
         num_stud = len(myresult)
@@ -178,16 +177,16 @@ def grade7():
             if x[13] > timeline:
                 num_stud = num_stud + 1
 
-        #print(num_stud)
+        print(num_stud)
         mycursor.close()
         return jsonpify(num_stud)
 
 
     except:
-        #print("Error")
-        # #print("Error Code:", err.errno)
-        # #print("SQLSTATE", err.sqlstate)
-        # #print("Message", err.msg)
+        print("Error")
+        # print("Error Code:", err.errno)
+        # print("SQLSTATE", err.sqlstate)
+        # print("Message", err.msg)
         # return jsonpify(err)
 
 @app.route('/grade8', methods=['GET', 'POST'])
@@ -198,7 +197,7 @@ def grade8():
         mycursor = db_connection.cursor()
         sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 8"
         val = (app.skl,)
-        #print(app.skl)
+        print(app.skl)
         mycursor.execute(sql, val)
         myresult = mycursor.fetchall()
         num_stud = len(myresult)
@@ -207,16 +206,16 @@ def grade8():
         for x in myresult:
             if x[13] > timeline:
                 num_stud = num_stud + 1
-        #print(num_stud)
+        print(num_stud)
         mycursor.close()
         return jsonpify(num_stud)
 
 
     except:
-        #print("Error")
-        # #print("Error Code:", err.errno)
-        # #print("SQLSTATE", err.sqlstate)
-        # #print("Message", err.msg)
+        print("Error")
+        # print("Error Code:", err.errno)
+        # print("SQLSTATE", err.sqlstate)
+        # print("Message", err.msg)
         # return jsonpify(err)
 
 
@@ -228,7 +227,7 @@ def grade9():
         mycursor = db_connection.cursor()
         sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 9"
         val = (app.skl,)
-        #print(app.skl)
+        print(app.skl)
         mycursor.execute(sql, val)
         myresult = mycursor.fetchall()
         num_stud = len(myresult)
@@ -237,16 +236,16 @@ def grade9():
         for x in myresult:
             if x[13] > timeline:
                 num_stud = num_stud + 1
-        #print(num_stud)
+        print(num_stud)
         mycursor.close()
         return jsonpify(num_stud)
 
 
     except:
-        #print("Error")
-        # #print("Error Code:", err.errno)
-        # #print("SQLSTATE", err.sqlstate)
-        # #print("Message", err.msg)
+        print("Error")
+        # print("Error Code:", err.errno)
+        # print("SQLSTATE", err.sqlstate)
+        # print("Message", err.msg)
         # return jsonpify(err)
 
 
@@ -258,7 +257,7 @@ def grade10():
         mycursor = db_connection.cursor()
         sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 10"
         val = (app.skl,)
-        #print(app.skl)
+        print(app.skl)
         mycursor.execute(sql, val)
         myresult = mycursor.fetchall()
         num_stud = len(myresult)
@@ -267,16 +266,16 @@ def grade10():
         for x in myresult:
             if x[13] > timeline:
                 num_stud = num_stud + 1
-        #print(num_stud)
+        print(num_stud)
         mycursor.close()
         return jsonpify(num_stud)
 
 
     except:
-        #print("Error")
-        # #print("Error Code:", err.errno)
-        # #print("SQLSTATE", err.sqlstate)
-        # #print("Message", err.msg)
+        print("Error")
+        # print("Error Code:", err.errno)
+        # print("SQLSTATE", err.sqlstate)
+        # print("Message", err.msg)
         # return jsonpify(err)
 
 @app.route('/grade6a', methods=['GET', 'POST'])
@@ -287,16 +286,16 @@ def grade6a():
         mycursor = db_connection.cursor()
         sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 6"
         val = (app.skl,)
-        #print(app.skl)
+        print(app.skl)
         mycursor.execute(sql, val)
         myresult = mycursor.fetchall()
         num_stud = len(myresult)
-        #print(num_stud)
+        print(num_stud)
         num_chatbot_stud = 0
         activetrends = []
         timeline = get_timeline()
         for x in myresult:
-            # #print(x)
+            # print(x)
             if x[4] > 0  and x[13] > timeline:
                 num_chatbot_stud = num_chatbot_stud + 1
 
@@ -306,7 +305,7 @@ def grade6a():
         return jsonpify(json.dumps(activetrends))
 
     except:
-        #print("Error")
+        print("Error")
 
 @app.route('/grade7a', methods=['GET', 'POST'])
 def grade7a():
@@ -316,16 +315,16 @@ def grade7a():
         mycursor = db_connection.cursor()
         sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 7"
         val = (app.skl,)
-        #print(app.skl)
+        print(app.skl)
         mycursor.execute(sql, val)
         myresult = mycursor.fetchall()
         num_stud = len(myresult)
-        #print(num_stud)
+        print(num_stud)
         num_chatbot_stud = 0
         activetrends = []
         timeline = get_timeline()
         for x in myresult:
-            # #print(x)
+            # print(x)
             if x[4] > 0 and x[13] > timeline:
                 num_chatbot_stud = num_chatbot_stud + 1
 
@@ -335,12 +334,12 @@ def grade7a():
         return jsonpify(json.dumps(activetrends))
 
     except:
-        #print("Error")
+        print("Error")
 
 
-# #print("Error Code:", err.errno)
-# #print("SQLSTATE", err.sqlstate)
-# #print("Message", err.msg)
+# print("Error Code:", err.errno)
+# print("SQLSTATE", err.sqlstate)
+# print("Message", err.msg)
 # return jsonpify(err)
 
 
@@ -353,16 +352,16 @@ def grade8a():
         mycursor = db_connection.cursor()
         sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 8"
         val = (app.skl,)
-        #print(app.skl)
+        print(app.skl)
         mycursor.execute(sql, val)
         myresult = mycursor.fetchall()
         num_stud = len(myresult)
-        #print(num_stud)
+        print(num_stud)
         num_chatbot_stud = 0
         activetrends = []
         timeline = get_timeline()
         for x in myresult:
-            # #print(x)
+            # print(x)
             if x[4] > 0 and x[13] > timeline:
                 num_chatbot_stud = num_chatbot_stud + 1
 
@@ -372,7 +371,7 @@ def grade8a():
         return jsonpify(json.dumps(activetrends))
 
     except:
-        #print("Error")
+        print("Error")
 
 
 @app.route('/grade9a', methods=['GET', 'POST'])
@@ -383,16 +382,16 @@ def grade9a():
         mycursor = db_connection.cursor()
         sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 9"
         val = (app.skl,)
-        #print(app.skl)
+        print(app.skl)
         mycursor.execute(sql, val)
         myresult = mycursor.fetchall()
         num_stud = len(myresult)
-        #print(num_stud)
+        print(num_stud)
         num_chatbot_stud = 0
         activetrends = []
         timeline = get_timeline()
         for x in myresult:
-            # #print(x)
+            # print(x)
             if x[4] > 0 and x[13] > timeline:
                 num_chatbot_stud = num_chatbot_stud + 1
 
@@ -402,7 +401,7 @@ def grade9a():
         return jsonpify(json.dumps(activetrends))
 
     except:
-        #print("Error")
+        print("Error")
 
 
 @app.route('/grade10a', methods=['GET', 'POST'])
@@ -413,20 +412,20 @@ def grade10a():
         mycursor = db_connection.cursor()
         sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 10"
         val = (app.skl,)
-        #print(app.skl)
+        print(app.skl)
         mycursor.execute(sql, val)
         myresult = mycursor.fetchall()
         num_stud = len(myresult)
-        #print(num_stud)
+        print(num_stud)
         num_chatbot_stud = 0
         activetrends = []
         timeline = get_timeline()
         for x in myresult:
-            # #print(x)
+            # print(x)
             if x[4] > 0 and x[13] > timeline:
                 num_chatbot_stud = num_chatbot_stud + 1
 
-        #print(num_chatbot_stud)
+        print(num_chatbot_stud)
 
         activetrends.append({'Trend': 'Grade10 Total Students', 'Count': str(num_stud)})
         activetrends.append({'Trend': 'Grade10 Chatbot Students', 'Count': str(num_chatbot_stud)})
@@ -434,7 +433,7 @@ def grade10a():
         return jsonpify(json.dumps(activetrends))
 
     except:
-        #print("Error")
+        print("Error")
 
 
 @app.route('/sub_wise', methods=['GET', 'POST'])
@@ -462,10 +461,10 @@ def sub_wise():
             for x in myresult_1:
                 if x[13] > timeline:
                     user_id.append(x[0])
-            #print(user_id)
+            print(user_id)
 
             for user in user_id:
-                #print(user)
+                print(user)
                 # Subject loop
                 sub = 0
                 for my_sub in subject:
@@ -485,13 +484,13 @@ def sub_wise():
             activetrends.append({"sector": "Science", "size": stud_count[4]})
 
         mycursor.close()
-        #print(activetrends)
+        print(activetrends)
 
         # return activetrends
         return jsonpify(json.dumps(activetrends))
 
     except:
-        #print("Error")
+        print("Error")
 
 
 
@@ -504,15 +503,15 @@ def trends():
     activetrends = []
     sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 6"
     val = (app.skl,)
-    #print(app.skl)
+    print(app.skl)
     mycursor.execute(sql, val)
     myresult = mycursor.fetchall()
     num_stud = len(myresult)
-    #print(num_stud)
+    print(num_stud)
     num_chatbot_stud = 0
     timeline = get_timeline()
     for x in myresult:
-        # #print(x)
+        # print(x)
         if x[4] > 0 and x[13] > timeline:
             num_chatbot_stud = num_chatbot_stud + 1
 
@@ -520,14 +519,14 @@ def trends():
     activetrends.append({'Trend': 'Grade6 Chatbot Students', 'Count': str(num_chatbot_stud)})
     sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 7"
     val = (app.skl,)
-    #print(app.skl)
+    print(app.skl)
     mycursor.execute(sql, val)
     myresult = mycursor.fetchall()
     num_stud = len(myresult)
-    #print(num_stud)
+    print(num_stud)
     num_chatbot_stud = 0
     for x in myresult:
-        # #print(x)
+        # print(x)
         if x[4] > 0  and x[13] > timeline:
             num_chatbot_stud = num_chatbot_stud + 1
 
@@ -535,14 +534,14 @@ def trends():
     activetrends.append({'Trend': 'Grade7 Chatbot Students', 'Count': str(num_chatbot_stud)})
     sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 8"
     val = (app.skl,)
-    #print(app.skl)
+    print(app.skl)
     mycursor.execute(sql, val)
     myresult = mycursor.fetchall()
     num_stud = len(myresult)
-    #print(num_stud)
+    print(num_stud)
     num_chatbot_stud = 0
     for x in myresult:
-        # #print(x)
+        # print(x)
         if x[4] > 0 and x[13] > timeline:
             num_chatbot_stud = num_chatbot_stud + 1
 
@@ -550,14 +549,14 @@ def trends():
     activetrends.append({'Trend': 'Grade8 Chatbot Students', 'Count': str(num_chatbot_stud)})
     sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 9"
     val = (app.skl,)
-    #print(app.skl)
+    print(app.skl)
     mycursor.execute(sql, val)
     myresult = mycursor.fetchall()
     num_stud = len(myresult)
-    #print(num_stud)
+    print(num_stud)
     num_chatbot_stud = 0
     for x in myresult:
-        # #print(x)
+        # print(x)
         if x[4] > 0 and x[13] > timeline:
             num_chatbot_stud = num_chatbot_stud + 1
 
@@ -565,14 +564,14 @@ def trends():
     activetrends.append({'Trend': 'Grade9 Chatbot Students', 'Count': str(num_chatbot_stud)})
     sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 10"
     val = (app.skl,)
-    #print(app.skl)
+    print(app.skl)
     mycursor.execute(sql, val)
     myresult = mycursor.fetchall()
     num_stud = len(myresult)
-    #print(num_stud)
+    print(num_stud)
     num_chatbot_stud = 0
     for x in myresult:
-        # #print(x)
+        # print(x)
         if x[4] > 0 and x[13] > timeline:
             num_chatbot_stud = num_chatbot_stud + 1
 
@@ -598,26 +597,26 @@ def get_top6_quiz():
             else:
                 quiz_scores[x[1]] = x[4]
 
-        #print(quiz_scores)
+        print(quiz_scores)
         sorted_quiz_scores = dict(sorted(quiz_scores.items(), key=lambda item: item[1], reverse=True))
-        #print(sorted_quiz_scores)
+        print(sorted_quiz_scores)
 
         activetrends = []
 
         for user_id in sorted_quiz_scores:
-            #print(user_id)
+            print(user_id)
             sql = "SELECT firstname from x8ur_chatbot_user where id=%s"
             val = (user_id,)
             mycursor.execute(sql, val)
             myresult = mycursor.fetchone()
             activetrends.append({'country': str(myresult[0]), 'visits': str(sorted_quiz_scores[user_id])})
-            #print(str(myresult))
+            print(str(myresult))
 
         mycursor.close()
         return jsonpify(json.dumps(activetrends))
 
     except:
-        #print("Error")
+        print("Error")
 
 @app.route('/topstudents', methods=['GET', 'POST'])
 def topstudents():
@@ -638,13 +637,13 @@ def topstudents():
             activetrends.append({'Name': row[0], 'no of login': str(row[1])})
 
         mycursor.close()
-        #print(activetrends)
+        print(activetrends)
 
         # return activetrends
         return jsonpify(json.dumps(activetrends))
 
     except:
-        #print("Error")
+        print("Error")
 
 
 if __name__ == '__main__':
