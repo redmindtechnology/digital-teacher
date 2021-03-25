@@ -104,9 +104,10 @@ def overallgrade():
         db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD,
                                       connection_timeout=60000)
         mycursor = db_connection.cursor()
+        schoolname = request.args.get('schoolname')
         sql = "SELECT * from x8ur_chatbot_user WHERE school = %s"
-        val = (app.skl,)
-        print(app.skl)
+        val = (schoolname,)
+        print(schoolname)
         mycursor.execute(sql, val)
         myresult = mycursor.fetchall()
         num_stud = len(myresult)
