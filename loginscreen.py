@@ -185,6 +185,7 @@ def trends():
 
     activetrends.append({'Trend': 'Grade6 Total Students', 'Count': str(num_stud)})
     activetrends.append({'Trend': 'Grade6 Chatbot Students', 'Count': str(num_chatbot_stud)})
+
     sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 7"
     val = (schoolname,)
     print(schoolname)
@@ -309,6 +310,169 @@ def topstudents():
         print(activetrends)
 
         # return activetrends
+        return jsonpify(json.dumps(activetrends))
+
+    except:
+        print("Error")
+
+
+@app.route('/grade6a', methods=['GET', 'POST'])
+def grade6a():
+    try:
+        db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD,
+                                      connection_timeout=60000)
+        mycursor = db_connection.cursor()
+        schoolname = request.args.get('skl')
+        sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 6"
+        val = (schoolname,)
+        print(schoolname)
+        mycursor.execute(sql, val)
+        myresult = mycursor.fetchall()
+        num_stud = len(myresult)
+        print(num_stud)
+        num_chatbot_stud = 0
+        activetrends = []
+        timeline = get_timeline()
+        for x in myresult:
+            # print(x)
+            if x[4] > 0  and x[13] > timeline:
+                num_chatbot_stud = num_chatbot_stud + 1
+
+        activetrends.append({'Trend': 'Grade6 Total Students', 'Count': str(num_stud)})
+        activetrends.append({'Trend': 'Grade6 Chatbot Students', 'Count': str(num_chatbot_stud)})
+        mycursor.close()
+        return jsonpify(json.dumps(activetrends))
+
+    except:
+        print("Error")
+
+@app.route('/grade7a', methods=['GET', 'POST'])
+def grade7a():
+    try:
+        db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD,
+                                      connection_timeout=60000)
+        mycursor = db_connection.cursor()
+        schoolname = request.args.get('skl')
+        sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 7"
+        val = (schoolname,)
+        print(schoolname)
+        mycursor.execute(sql, val)
+        myresult = mycursor.fetchall()
+        num_stud = len(myresult)
+        print(num_stud)
+        num_chatbot_stud = 0
+        activetrends = []
+        timeline = get_timeline()
+        for x in myresult:
+            # print(x)
+            if x[4] > 0 and x[13] > timeline:
+                num_chatbot_stud = num_chatbot_stud + 1
+
+        activetrends.append({'Trend': 'Grade7 Total Students', 'Count': str(num_stud)})
+        activetrends.append({'Trend': 'Grade7 Chatbot Students', 'Count': str(num_chatbot_stud)})
+        mycursor.close()
+        return jsonpify(json.dumps(activetrends))
+
+    except:
+        print("Error")
+
+
+# print("Error Code:", err.errno)
+# print("SQLSTATE", err.sqlstate)
+# print("Message", err.msg)
+# return jsonpify(err)
+
+
+
+@app.route('/grade8a', methods=['GET', 'POST'])
+def grade8a():
+    try:
+        db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD,
+                                      connection_timeout=60000)
+        mycursor = db_connection.cursor()
+        schoolname = request.args.get('skl')
+        sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 8"
+        val = (schoolname,)
+        print(schoolname)
+        mycursor.execute(sql, val)
+        myresult = mycursor.fetchall()
+        num_stud = len(myresult)
+        print(num_stud)
+        num_chatbot_stud = 0
+        activetrends = []
+        timeline = get_timeline()
+        for x in myresult:
+            # print(x)
+            if x[4] > 0 and x[13] > timeline:
+                num_chatbot_stud = num_chatbot_stud + 1
+
+        activetrends.append({'Trend': 'Grade8 Total Students', 'Count': str(num_stud)})
+        activetrends.append({'Trend': 'Grade8 Chatbot Students', 'Count': str(num_chatbot_stud)})
+        mycursor.close()
+        return jsonpify(json.dumps(activetrends))
+
+    except:
+        print("Error")
+
+
+@app.route('/grade9a', methods=['GET', 'POST'])
+def grade9a():
+    try:
+        db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD,
+                                      connection_timeout=60000)
+        mycursor = db_connection.cursor()
+        schoolname = request.args.get('skl')
+        sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 9"
+        val = (schoolname,)
+        print(schoolname)
+        mycursor.execute(sql, val)
+        myresult = mycursor.fetchall()
+        num_stud = len(myresult)
+        print(num_stud)
+        num_chatbot_stud = 0
+        activetrends = []
+        timeline = get_timeline()
+        for x in myresult:
+            # print(x)
+            if x[4] > 0 and x[13] > timeline:
+                num_chatbot_stud = num_chatbot_stud + 1
+
+        activetrends.append({'Trend': 'Grade9 Total Students', 'Count': str(num_stud)})
+        activetrends.append({'Trend': 'Grade9 Chatbot Students', 'Count': str(num_chatbot_stud)})
+        mycursor.close()
+        return jsonpify(json.dumps(activetrends))
+
+    except:
+        print("Error")
+
+
+@app.route('/grade10a', methods=['GET', 'POST'])
+def grade10a():
+    try:
+        db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD,
+                                      connection_timeout=60000)
+        mycursor = db_connection.cursor()
+        schoolname = request.args.get('skl')
+        sql = "SELECT * from x8ur_chatbot_user WHERE school = %s AND grade = 10"
+        val = (schoolname,)
+        print(schoolname)
+        mycursor.execute(sql, val)
+        myresult = mycursor.fetchall()
+        num_stud = len(myresult)
+        print(num_stud)
+        num_chatbot_stud = 0
+        activetrends = []
+        timeline = get_timeline()
+        for x in myresult:
+            # print(x)
+            if x[4] > 0 and x[13] > timeline:
+                num_chatbot_stud = num_chatbot_stud + 1
+
+        print(num_chatbot_stud)
+
+        activetrends.append({'Trend': 'Grade10 Total Students', 'Count': str(num_stud)})
+        activetrends.append({'Trend': 'Grade10 Chatbot Students', 'Count': str(num_chatbot_stud)})
+        mycursor.close()
         return jsonpify(json.dumps(activetrends))
 
     except:
