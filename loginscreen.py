@@ -477,6 +477,181 @@ def grade10a():
 
     except:
         print("Error")
+        
+@app.route('/loadstudents', methods=['GET', 'POST'])
+def loadstudents():
+    try:
+        db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD,
+                                      connection_timeout=60000)
+        # Get the students based on first dropdown change
+        mycursor = db_connection.cursor()
+        grade = request.args.get("grade")
+        school = request.args.get("school")
+        grade = grade[6:]
+        print(grade)
+        print(school)
+
+        sql = "select rollno, firstname from x8ur_chatbot_user where grade = %s and school = %s"
+        dropdown_name = []
+
+        mycursor.execute(sql, (grade,school,))
+        myresult_all = mycursor.fetchall()
+        #print( myresult_all)
+        for row in myresult_all:
+            print(row)
+            #dropdown_name.append(row[0] + " - " + row[1])
+            dropdown_name.append({'Name': row[0] + " - " + row[1]})
+        
+        mycursor.close()
+        print("dropdown",dropdown_name)
+
+        # return activetrends
+        return jsonpify(json.dumps(dropdown_name))        
+
+    except:    
+        print("Error")
+
+
+@app.route('/chart1_student', methods=['GET', 'POST'])
+def chart1_student():
+    try:
+        db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD,
+                                      connection_timeout=60000)
+        # Get the students based on first dropdown change
+        mycursor = db_connection.cursor()
+        rollno = request.args.get("rollno")
+        school = request.args.get("school")
+        
+        print(rollno)
+        print(school)
+        rollno_array = rollno.split(" ")
+        rollno = rollno_array[0]
+        print(rollno)
+        sql = "select cast(lesson.starttime as Date) as Date, count(*) from x8ur_chatbot_lesson_activity_tracker as lesson JOIN x8ur_chatbot_user as user where lesson.userid=user.id and user.rollno=%s and user.school=%s GROUP BY cast(lesson.starttime as Date)"
+        chart1_student_data = []
+
+        mycursor.execute(sql, (rollno,school,))
+        myresult_all = mycursor.fetchall()
+
+        for row in myresult_all:
+            chart1_student_data.append({'date': str(row[0]),'value': str(row[1])})
+        mycursor.close()
+        print(chart1_student_data)
+        # return activetrends
+        return jsonpify(json.dumps(chart1_student_data))
+    
+    except:
+        print("Error")
+
+@app.route('/chart2_lesson_guage_python', methods=['GET', 'POST'])
+def chart2_lesson_guage_python():
+    try:
+        db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD,
+                                      connection_timeout=60000)
+        # Get the students based on first dropdown change
+        mycursor = db_connection.cursor()
+        rollno = request.args.get("rollno")
+        school = request.args.get("school")
+        print(rollno)
+        print(school)
+        #to split rollno
+        rollno_array = rollno.split(" ")
+        rollno = rollno_array[0]
+        sql = "select lesson.subject, count(*) from x8ur_chatbot_lesson_activity_tracker as lesson JOIN x8ur_chatbot_user as user where lesson.userid=user.id and user.rollno=%s and user.school=%s GROUP BY lesson.subject"
+        student_chart2_data = []
+
+        mycursor.execute(sql, (rollno,school,))
+        myresult_all = mycursor.fetchall()
+        print(myresult_all)
+        for row in myresult_all:
+            student_chart2_data.append({'category': str(row[0]),'value': str(row[1]),'full': '30'})
+        subject_array = ["English_Lesson","English_Poem","Science","History","Geography","Civics","Economics"]
+
+        for subject in subject_array:
+            print(subject)
+            if(subject not in student_chart2_data):  
+                student_chart2_data.append({'category': subject,'value': '0','full': '30'})
+                print(student_chart2_data)
+        
+        
+        mycursor.close()
+        print(student_chart2_data)
+        return jsonpify(json.dumps(student_chart2_data))
+    
+    except:
+        print("Error")
+
+
+@app.route('/chart3_student_quiz_tracker', methods=['GET', 'POST'])
+def chart3_student_quiz_tracker():
+    try:
+        db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD,
+                                      connection_timeout=60000)
+        # Get the students based on first dropdown change
+        mycursor = db_connection.cursor()
+        rollno = request.args.get("rollno")
+        school = request.args.get("school")
+        print(rollno)
+        print(school)
+        #to split rollno
+        rollno_array = rollno.split(" ")
+        rollno = rollno_array[0]
+        sql = "select cast(quiz.starttime as Date) as Date, count(*) from x8ur_chatbot_quiz_activity_tracker as quiz JOIN x8ur_chatbot_user as user where quiz.userid=user.id and user.rollno=%s and user.school = %s GROUP BY cast(quiz.starttime as Date)"
+        chart3_student_data = []
+
+        mycursor.execute(sql, (rollno,school,))
+        myresult_all = mycursor.fetchall()
+
+        for row in myresult_all:
+            chart3_student_data.append({'date': str(row[0]),'value': str(row[1])})
+
+        mycursor.close()
+        print(chart3_student_data)
+
+        # return activetrends
+        return jsonpify(json.dumps(chart3_student_data))
+    
+    except:
+        print("Error")
+
+@app.route('/chart4_student_quiz_guage', methods=['GET', 'POST'])
+def chart4_student_quiz_guage():
+    try:
+        db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD,
+                                      connection_timeout=60000)
+        # Get the students based on first dropdown change
+        mycursor = db_connection.cursor()
+        rollno = request.args.get("rollno")
+        school = request.args.get("school")
+        print(rollno)
+        print(school)
+        #to split rollno
+        rollno_array = rollno.split(" ")
+        rollno = rollno_array[0]
+        sql = "select quiz.subject, count(*) from x8ur_chatbot_quiz_activity_tracker as quiz JOIN x8ur_chatbot_user as user where quiz.userid=user.id and user.rollno=%s and user.school = %s GROUP BY quiz.subject"
+        student_chart4_data = []
+
+        mycursor.execute(sql, (rollno,school,))
+        myresult_all = mycursor.fetchall()
+        i=1
+        for row in myresult_all:
+            student_chart4_data.append({ 'name': str(row[0]), 'file': "", 'track': str(i), 'value': str(row[1]) })
+            i=i+1
+        subject_array = ["English_Lesson","English_Poem","Science","History","Geography","Civics","Economics"]
+
+        for subject in subject_array:
+            print(subject)
+            if(subject not in student_chart4_data): 
+                student_chart4_data.append({ 'name': subject, 'file': "", 'track': str(i), 'value': '0' })
+                i=i+1 
+                
+                print(student_chart4_data)
+        return jsonpify(json.dumps(student_chart4_data))
+    
+    except:
+        print("Error")
+
+
 
 if __name__ == '__main__':
     app.run()
