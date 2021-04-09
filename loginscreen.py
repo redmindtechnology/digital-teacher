@@ -320,8 +320,8 @@ def topstudents():
         print("Error")
 
 
-@app.route('/load_chart', methods=['GET', 'POST'])
-def load_chart():
+@app.route('/chart_grade', methods=['GET', 'POST'])
+def chart_grade():
     try:
         db_connection = mysql.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD,
                                       connection_timeout=60000)
@@ -353,7 +353,6 @@ def load_chart():
         print("Error")
 
 
-        
 @app.route('/loadstudents', methods=['GET', 'POST'])
 def loadstudents():
     try:
@@ -531,4 +530,3 @@ def chart4_student_quiz_guage():
 
 if __name__ == '__main__':
     app.run()
-
